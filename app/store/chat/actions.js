@@ -1,57 +1,34 @@
 import * as types from './actionTypes'
 import firebaseService from '../../services/firebase'
+import * as firebaseUtils from '../../services/firebaseUtils';
 
 const FIREBASE_REF_MESSAGES_LIMIT = 20
 
 
-export const sendMessage = (senderId, receiverId, message, senderName, senderAvatar, receiverName, receiverAvatar) => {
+
+export const sendMessage = (senderId, receiverId, message, senderName, senderAvatar, receiverName, receiverAvatar, messageType = firebaseUtils.messageTypes.text) => {
   return (dispatch) => {
     let visitedDate = new Date().toUTCString();
     const sessionId = new Date().getTime();
 
+    const user = {
+      id: senderId,
+      avatar: senderAvatar,
+      name: senderName
+    };
+
     let messageRoom1 = senderId + "-" + receiverId;
     let messageRoom2 = receiverId + "-" + senderId;
 
-    firebaseService.database().ref('messages').child(messageRoom1).child(`${sessionId}`).set({
-      id: sessionId,
-      status: "sent",
-      text: message,
-      user: {
-        id: senderId,
-        avatar: senderAvatar,
-        name: senderName
-      },
-      createdAt: visitedDate
-    })
+    // Generate message object
+    const messageObject = firebaseUtils.getMessageObject(sessionId, messageType, message, user, visitedDate);
 
-    firebaseService.database().ref('messages').child(messageRoom2).child(`${sessionId}`).set({
-      id: sessionId,
-      status: "sent",
-      text: message,
-      user: {
-        id: senderId,
-        avatar: senderAvatar,
-        name: senderName
-      },
-      createdAt: visitedDate
-    })
+    // Store message in the both rooms
+    firebaseUtils.createMessage(sessionId, messageRoom1, messageObject);
+    firebaseUtils.createMessage(sessionId, messageRoom2, messageObject);
 
-    firebaseService.database().ref().child('messageThreadMetadata').child( messageRoom1 ).once("value", function (snap) {
-      if (snap.val() == null) {
-        firebaseService.database().ref('messageThreadMetadata').child(messageRoom1).set({
-          roomId: messageRoom1,
-          createdByUserId: senderId,
-          threadType: "private",
-          createdAt: visitedDate
-        })
-        firebaseService.database().ref('messageThreadMetadata').child(messageRoom2).set({
-          roomId: messageRoom1,
-          createdByUserId: senderId,
-          threadType: "private",
-          createdAt: visitedDate
-        })
-      }
-    });
+    // Store message thread metadata for both rooms
+    firebaseUtils.createMessageThreadMetadata(senderId, messageRoom1, messageRoom2, visitedDate);
 
     firebaseService.database().ref().child('messageFriends').child( senderId ).child( receiverId ).once("value", function (snap) {
       if (snap.val() == null) {
