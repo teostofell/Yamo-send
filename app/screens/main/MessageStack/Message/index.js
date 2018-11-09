@@ -75,7 +75,8 @@ class MessageScreen extends Component {
     client: null,
     avatar: "",
     user: null,
-    isEmojiSwitch: false
+    isEmojiSwitch: false,
+    customMessage: ""
   };
 
   constructor(props) {
@@ -84,12 +85,29 @@ class MessageScreen extends Component {
     this.onAvatarPress = this.onAvatarPress.bind(this);
 
     this.setEmoji = this.setEmoji.bind(this);
+    this.setCustomMessage = this.setCustomMessage.bind(this);
+    this.pushCustomMessage = this.pushCustomMessage.bind(this);
   }
 
   setEmoji() {
     const emoji = this.state.isEmojiSwitch;
     this.setState({
       isEmojiSwitch: !emoji
+    });
+  }
+
+  setCustomMessage(text) {
+    this.setState({
+      customMessage: text
+    });
+  }
+
+  pushCustomMessage(text) {
+    const oldText = this.state.customMessage;
+    const newText = oldText + text.char;
+    console.log("checking", text);
+    this.setState({
+      customMessage: newText
     });
   }
 
@@ -254,7 +272,7 @@ class MessageScreen extends Component {
     );
   }
 
-  renderChatFooter = props => {
+  renderChatFooter = (props, pushCustomMessage) => {
     if (props) {
       return (
         <View
@@ -266,11 +284,7 @@ class MessageScreen extends Component {
             backgroundColor: "white"
           }}
         >
-          <EmojiInput
-            onEmojiSelected={emoji => {
-              console.log(emoji);
-            }}
-          />
+          <EmojiInput onEmojiSelected={emoji => pushCustomMessage(emoji)} />
         </View>
       );
     } else {
@@ -632,12 +646,17 @@ class MessageScreen extends Component {
               renderBubble={this.renderBubble}
               renderFooter={() => this.renderFooter(this.setEmoji)}
               renderChatFooter={() =>
-                this.renderChatFooter(this.state.isEmojiSwitch)
+                this.renderChatFooter(
+                  this.state.isEmojiSwitch,
+                  this.pushCustomMessage
+                )
               }
               messages={this.state.messages}
               renderSend={this.renderSend}
               // showUserAvatar={true}
               showAvatarForEveryMessage={true}
+              text={this.state.customMessage}
+              onInputTextChanged={text => this.setCustomMessage(text)}
             />
           )}
         </View>
