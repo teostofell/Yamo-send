@@ -65,3 +65,14 @@ export function updateMessageFriends(user, receiverId, messageRoom){
         }
       });
 }
+
+export function uploadMessageFile(file, filename){
+    // file -> Blob or Base64?
+
+    var metadata = {
+        contentType: 'image/jpeg'
+      };
+
+    firebaseService.storage().ref().child(`MessagesImages/${filename}`)
+        .put(file, metadata);
+}
