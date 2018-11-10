@@ -11,6 +11,7 @@ import {
   YellowBox
 } from "react-native";
 import { Button } from "react-native-ui-lib";
+import ImagePicker from "react-native-image-picker";
 import { connect } from "react-redux";
 import { Switch } from "react-native-switch";
 import { GiftedChat, Bubble, Send } from "react-native-gifted-chat";
@@ -29,7 +30,8 @@ import {
   loadMessages,
   loadFriendList,
   clearUnreadMessages,
-  loadUnreadMessageCounts
+  loadUnreadMessageCounts,
+  sendImage
 } from "../../../../store/chat";
 import { setOnlineUserStatus } from "../../../../store/firebaseData";
 import { getChatItems } from "../../../../store/chat/selectors";
@@ -76,6 +78,7 @@ class MessageScreen extends Component {
     avatar: "",
     user: null,
     isEmojiSwitch: false,
+    isImagePickerSwitch: false,
     customMessage: ""
   };
 
@@ -85,6 +88,7 @@ class MessageScreen extends Component {
     this.onAvatarPress = this.onAvatarPress.bind(this);
 
     this.setEmoji = this.setEmoji.bind(this);
+    this.setImagePicker = this.setImagePicker.bind(this);
     this.setCustomMessage = this.setCustomMessage.bind(this);
     this.pushCustomMessage = this.pushCustomMessage.bind(this);
   }
@@ -93,6 +97,13 @@ class MessageScreen extends Component {
     const emoji = this.state.isEmojiSwitch;
     this.setState({
       isEmojiSwitch: !emoji
+    });
+  }
+
+  setImagePicker() {
+    const imgPick = this.state.isImagePickerSwitch;
+    this.setState({
+      isImagePickerSwitch: !imgPick
     });
   }
 
@@ -316,11 +327,13 @@ class MessageScreen extends Component {
           resizeMod="cover"
           source={require("../../../../assets/005.png")}
         />
-        <Image
-          style={{ height: 30, width: 35 }}
-          resizeMod="cover"
-          source={require("../../../../assets/001.png")}
-        />
+        <TouchableOpacity onPress={() => this.handleAddPicture()}>
+          <Image
+            style={{ height: 30, width: 35 }}
+            resizeMod="cover"
+            source={require("../../../../assets/001.png")}
+          />
+        </TouchableOpacity>
         <Image
           style={{ height: 30, width: 35 }}
           resizeMod="cover"
@@ -357,7 +370,7 @@ class MessageScreen extends Component {
     // user: {},
     // createdAt: Fri Sep 07 2018 23:41:58 GMT+0800 (CST),
     // _id: '8add5027-da28-447d-917f-458fc4fa5d80' }
-
+    console.log("the current message: ", messages[0]);
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages)
     }));
@@ -375,6 +388,60 @@ class MessageScreen extends Component {
         this.state.avatar != null || this.state.avatar != ""
           ? this.state.avatar
           : Globals.BaseDefaultAvatarMale
+      )
+    );
+  }
+
+  handleAddPicture = () => {
+    const options = {
+      title: "Select Profile Pic",
+      mediaType: "photo",
+      takePhotoButtonTitle: "Take a Photo",
+      maxWidth: 256,
+      maxHeight: 256,
+      allowsEditing: true,
+      noData: true
+    };
+    ImagePicker.showImagePicker(options, response => {
+      console.log("Response = ", response);
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else {
+        const base64 = "data:image/jpeg;base64," + response.data;
+        const fileName = response.fileName;
+        fetch(base64)
+          .then(res => res.blob())
+          .then(blob => this.props.dispatch(sendImage(blob, fileName)));
+      }
+    });
+  };
+
+  onPhotoSubmit(messages = []) {
+    // { text: 'Hi',
+    // user: {},
+    // createdAt: Fri Sep 07 2018 23:41:58 GMT+0800 (CST),
+    // _id: '8add5027-da28-447d-917f-458fc4fa5d80' }
+
+    this.setState(previousState => ({
+      messages: GiftedChat.append(previousState.messages, messages)
+    }));
+
+    this.props.dispatch(
+      sendMessage(
+        this.state.user.uid,
+        this.state.client.uid,
+        messages[0].image,
+        this.state.user.name,
+        Globals.avatarPhoto != null
+          ? Globals.avatarPhoto.url
+          : Globals.BaseDefaultAvatarMale,
+        this.state.client.name,
+        this.state.avatar != null || this.state.avatar != ""
+          ? this.state.avatar
+          : Globals.BaseDefaultAvatarMale,
+        "image"
       )
     );
   }
