@@ -418,13 +418,13 @@ class MessageScreen extends Component {
           .then(blob => this.props.dispatch(sendImage(blob, fileName)));
         const url = this.props.dispatch(getImage(fileName));
         console.log("url = ", url);
-        const message = {};
+        /*const message = {};
         message.image = url;
         message.messageType = "image";
         message.user = {};
         message.createdAt = Date.now();
         message._id = "8add5027-da28-447d-917f-458fc4fa5d82";
-        this.submitPhoto([message, ...this.state.messages]);
+        this.submitPhoto([message, ...this.state.messages]);*/
       }
     });
   };
