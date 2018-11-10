@@ -76,3 +76,14 @@ export function uploadMessageFile(file, filename){
     firebaseService.storage().ref().child(`MessagesImages/${filename}`)
         .put(file, metadata);
 }
+
+export function getMessageFile(filename){
+    firebaseService.storage().ref().child(`MessagesImages/${filename}`)
+        .getDownloadURL()
+        .then(function(url) {
+            return url;
+        })
+        .catch(function(error) {
+            console.log("Error", error);
+        });
+}
