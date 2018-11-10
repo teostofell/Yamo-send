@@ -31,7 +31,8 @@ import {
   loadFriendList,
   clearUnreadMessages,
   loadUnreadMessageCounts,
-  sendImage
+  sendImage,
+  getImage
 } from "../../../../store/chat";
 import { setOnlineUserStatus } from "../../../../store/firebaseData";
 import { getChatItems } from "../../../../store/chat/selectors";
@@ -415,11 +416,20 @@ class MessageScreen extends Component {
         fetch(base64)
           .then(res => res.blob())
           .then(blob => this.props.dispatch(sendImage(blob, fileName)));
+        const url = this.props.dispatch(getImage(fileName));
+        console.log("url = ", url);
+        const message = {};
+        message.image = url;
+        message.messageType = "image";
+        message.user = {};
+        message.createdAt = Date.now();
+        message._id = "8add5027-da28-447d-917f-458fc4fa5d82";
+        this.submitPhoto([message, ...this.state.messages]);
       }
     });
   };
 
-  onPhotoSubmit(messages = []) {
+  submitPhoto(messages = []) {
     // { text: 'Hi',
     // user: {},
     // createdAt: Fri Sep 07 2018 23:41:58 GMT+0800 (CST),

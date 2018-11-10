@@ -7,7 +7,14 @@ const FIREBASE_REF_MESSAGES_LIMIT = 20;
 export const sendImage = (file, imageName) => {
   return dispatch => {
     console.log("Checking the argument for image sender:", imageName);
-    firebaseUtils.uploadMessageFile(file, imageName);
+    return firebaseUtils.uploadMessageFile(file, imageName);
+  };
+};
+
+export const getImage = imageName => {
+  return dispatch => {
+    console.log("Checking the argument for image getter:", imageName);
+    return firebaseUtils.getMessageFile(imageName);
   };
 };
 
