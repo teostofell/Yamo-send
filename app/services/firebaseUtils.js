@@ -14,9 +14,14 @@ export function getMessageObject(sessionId, type, content, user, visitedDate) {
     createdAt: visitedDate
   };
 
-  if (type == "text") message.text = content;
-  else if (type == "image") message.image = content;
-
+  if (type === "text") {
+    message.text = content;
+    message.image = "";
+  } else if (type === "image") {
+    message.image = content;
+    message.text = "";
+  }
+  console.log("image: ", message.image);
   return message;
 }
 
@@ -112,21 +117,9 @@ export function uploadMessageFile(file, filename) {
     .ref()
     .child(`MessagesImages/${filename}`);
 
-<<<<<<< HEAD
-    return storageRef
-        .put(file, metadata)
-        .then(function(){
-            return storageRef.getDownloadURL().then(result => (
-                result
-            ));
-        }); 
-=======
-  storageRef.put(file, metadata).then(function() {
-    storageRef.getDownloadURL().then(function(result) {
-      return result;
-    });
+  return storageRef.put(file, metadata).then(function() {
+    return storageRef.getDownloadURL().then(result => result);
   });
->>>>>>> bf60e19bfda8a0414f507a6550a647910b015652
 }
 
 export function getMessageFile(filename) {

@@ -23,7 +23,7 @@ import EmojiInput from "react-native-emoji-input";
 
 import CircleAvatarView from "../../../../components/CircleAvatarView";
 import LoadingIndicator from "../../../../components/LoadingIndicator";
-
+import * as firebaseUtils from "../../../../services/firebaseUtils";
 import { setUserData } from "../../../../store/userData";
 import {
   sendMessage,
@@ -141,7 +141,9 @@ class MessageScreen extends Component {
         data.forEach(item => {
           let messageItem = {
             _id: item.id,
+            messageType: item.messageType,
             text: item.text,
+            image: item.image,
             createdAt: item.createdAt,
             user:
               item.user.id == Globals.userData.uid
@@ -404,7 +406,6 @@ class MessageScreen extends Component {
       noData: false
     };
     ImagePicker.showImagePicker(options, response => {
-      console.log("Response = ", response);
       if (response.didCancel) {
         console.log("User cancelled image picker");
       } else if (response.error) {
@@ -412,41 +413,44 @@ class MessageScreen extends Component {
       } else {
         const base64 = "data:image/jpeg;base64," + response.data;
         const fileName = response.fileName;
-        console.log("data = ", response.data);
+
         fetch(base64)
           .then(res => res.blob())
           .then(blob => {
-            const url = this.props.dispatch(sendImage(blob, fileName));
-            console.log("url = ", url);
-            return url;
-          });
+            this.props.dispatch(sendImage(blob, fileName)).then(res => {
+              url = res;
+              console.log("url = ", url);
+              const message = {};
+              message.image = url;
+              message.messageType = "image";
+              message.user = {};
+              message.createdAt = Date.now();
 
-        /*const message = {};
-        message.image = url;
-        message.messageType = "image";
-        message.user = {};
-        message.createdAt = Date.now();
-        message._id = "8add5027-da28-447d-917f-458fc4fa5d82";
-        this.submitPhoto([message, ...this.state.messages]);*/
+              console.log("messages = ", [message, ...this.state.messages]);
+              this.submitPhoto(message);
+
+              return url;
+            });
+          });
       }
     });
   };
 
-  submitPhoto(messages = []) {
+  submitPhoto(message) {
     // { text: 'Hi',
     // user: {},
     // createdAt: Fri Sep 07 2018 23:41:58 GMT+0800 (CST),
     // _id: '8add5027-da28-447d-917f-458fc4fa5d80' }
 
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages)
-    }));
+    /*this.setState(previousState => ({
+      messages: GiftedChat.append(previousState.messages, [message, ...this.state.messages])
+    }));*/
 
     this.props.dispatch(
       sendMessage(
         this.state.user.uid,
         this.state.client.uid,
-        messages[0].image,
+        message.image,
         this.state.user.name,
         Globals.avatarPhoto != null
           ? Globals.avatarPhoto.url
@@ -455,7 +459,7 @@ class MessageScreen extends Component {
         this.state.avatar != null || this.state.avatar != ""
           ? this.state.avatar
           : Globals.BaseDefaultAvatarMale,
-        "image"
+        firebaseUtils.messageTypes.image
       )
     );
   }

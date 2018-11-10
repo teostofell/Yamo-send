@@ -6,9 +6,11 @@ const FIREBASE_REF_MESSAGES_LIMIT = 20;
 
 export const sendImage = (file, imageName) => {
   return dispatch => {
-    const url = firebaseUtils.uploadMessageFile(file, imageName);
-    console.log("Checking the url for image sender:", url);
-    return url;
+    return firebaseUtils.uploadMessageFile(file, imageName).then(res => {
+      url = res;
+      console.log("Checking the url for image sender:", url);
+      return url;
+    });
   };
 };
 
