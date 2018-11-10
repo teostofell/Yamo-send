@@ -400,7 +400,7 @@ class MessageScreen extends Component {
       maxWidth: 256,
       maxHeight: 256,
       allowsEditing: true,
-      noData: true
+      noData: false
     };
     ImagePicker.showImagePicker(options, response => {
       console.log("Response = ", response);
@@ -411,6 +411,7 @@ class MessageScreen extends Component {
       } else {
         const base64 = "data:image/jpeg;base64," + response.data;
         const fileName = response.fileName;
+        console.log("data = ", response.data);
         fetch(base64)
           .then(res => res.blob())
           .then(blob => this.props.dispatch(sendImage(blob, fileName)));
