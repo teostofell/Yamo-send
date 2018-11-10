@@ -415,9 +415,12 @@ class MessageScreen extends Component {
         console.log("data = ", response.data);
         fetch(base64)
           .then(res => res.blob())
-          .then(blob => this.props.dispatch(sendImage(blob, fileName)));
-        const url = this.props.dispatch(getImage(fileName));
-        console.log("url = ", url);
+          .then(blob => {
+            const url = this.props.dispatch(sendImage(blob, fileName));
+            console.log("url = ", url);
+            return url;
+          });
+
         /*const message = {};
         message.image = url;
         message.messageType = "image";
