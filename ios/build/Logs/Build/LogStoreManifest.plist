@@ -5,6 +5,36 @@
 	<key>logFormatVersion</key>
 	<integer>9</integer>
 	<key>logs</key>
-	<dict/>
+	<dict>
+		<key>93923FEC-8861-48E6-A1AB-52593D93FABF</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>93923FEC-8861-48E6-A1AB-52593D93FABF.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>W</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>Yamo project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Yamo</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Yamo with scheme Yamo and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>563895351.49225104</real>
+			<key>timeStoppedRecording</key>
+			<real>563895365.59775305</real>
+			<key>title</key>
+			<string>Building project Yamo with scheme Yamo and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>93923FEC-8861-48E6-A1AB-52593D93FABF</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

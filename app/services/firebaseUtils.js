@@ -2,7 +2,8 @@ import firebaseService from "./firebase";
 
 export const messageTypes = {
   text: "text",
-  image: "image"
+  image: "image",
+  sticker: "sticker"
 };
 
 export function getMessageObject(sessionId, type, content, user, visitedDate) {
@@ -17,9 +18,15 @@ export function getMessageObject(sessionId, type, content, user, visitedDate) {
   if (type === "text") {
     message.text = content;
     message.image = "";
+    message.sticker = "";
   } else if (type === "image") {
-    message.image = content;
     message.text = "";
+    message.image = content;
+    message.sticker = "";
+  } else if (type === "sticker") {
+    message.image = "";
+    message.text = "";
+    message.sticker = content;
   }
   console.log("image: ", message.image);
   return message;
