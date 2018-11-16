@@ -29,7 +29,8 @@ export const sendMessage = (
   senderAvatar,
   receiverName,
   receiverAvatar,
-  messageType = firebaseUtils.messageTypes.text
+  messageType = firebaseUtils.messageTypes.text,
+  stickerWidth = 0
 ) => {
   return dispatch => {
     let visitedDate = new Date().toUTCString();
@@ -50,7 +51,8 @@ export const sendMessage = (
       messageType,
       message,
       user,
-      visitedDate
+      visitedDate,
+      stickerWidth
     );
 
     // Store message in the both rooms

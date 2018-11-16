@@ -147,6 +147,7 @@ class MessageScreen extends Component {
             text: item.text,
             image: item.image,
             sticker: item.sticker,
+            stickerWidth: item.stickerWidth,
             createdAt: item.createdAt,
             user:
               item.user.id == Globals.userData.uid
@@ -265,9 +266,13 @@ class MessageScreen extends Component {
     return !props.currentMessage.sticker ? (
       <View />
     ) : (
-      <View style={{ width: 150 }}>
+      <View style={{ height: 170 }}>
         <Image
-          style={{ height: 185 }}
+          style={{
+            height: 150,
+            width: 1.5 * props.currentMessage.stickerWidth,
+            resizeMode: "contain"
+          }}
           source={{
             uri: props.currentMessage.sticker
           }}
@@ -421,7 +426,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FDjoss%20Girl.png?alt=media&token=b8eafe69-5570-4d92-a8fc-bd360de99c59"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FDjoss%20Girl.png?alt=media&token=b8eafe69-5570-4d92-a8fc-bd360de99c59",
+                    87
                   )
                 }
               >
@@ -438,7 +444,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FDjoss.png?alt=media&token=e2de8bc8-08af-412c-9ff3-78a855ceaa38"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FDjoss.png?alt=media&token=e2de8bc8-08af-412c-9ff3-78a855ceaa38",
+                    80
                   )
                 }
               >
@@ -455,7 +462,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FFlatte%20Boy.png?alt=media&token=79b36f98-5110-4702-b4d1-79799e37ef1d"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FFlatte%20Boy.png?alt=media&token=79b36f98-5110-4702-b4d1-79799e37ef1d",
+                    74
                   )
                 }
               >
@@ -472,7 +480,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FFlatterGirl.png?alt=media&token=923d7470-9b48-41ca-bbd3-7e91479bd774"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FFlatterGirl.png?alt=media&token=923d7470-9b48-41ca-bbd3-7e91479bd774",
+                    68
                   )
                 }
               >
@@ -489,7 +498,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FGift.png?alt=media&token=f1d21172-e85a-4c26-ad4f-19dbd3a706ab"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FGift.png?alt=media&token=f1d21172-e85a-4c26-ad4f-19dbd3a706ab",
+                    118
                   )
                 }
               >
@@ -506,7 +516,9 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FHow%20Girl.png?alt=media&token=9ecc31ff-9b4d-45fb-951f-1d41d20ffa99"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FHow%20Girl.png?alt=media&token=9ecc31ff-9b4d-45fb-951f-1d41d20ffa99",
+
+                    90
                   )
                 }
               >
@@ -523,7 +535,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FHow.png?alt=media&token=a14f7f3c-adf6-4ae5-a795-82a9f054d512"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FHow.png?alt=media&token=a14f7f3c-adf6-4ae5-a795-82a9f054d512",
+                    83
                   )
                 }
               >
@@ -540,7 +553,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FKissBoy.png?alt=media&token=d6a860b1-ed65-40ca-b92f-7c5937f36352"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FKissBoy.png?alt=media&token=d6a860b1-ed65-40ca-b92f-7c5937f36352",
+                    90
                   )
                 }
               >
@@ -557,7 +571,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FKissGirl.png?alt=media&token=20c6941f-1b57-41bf-98b3-0a693d950a7f"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FKissGirl.png?alt=media&token=20c6941f-1b57-41bf-98b3-0a693d950a7f",
+                    90
                   )
                 }
               >
@@ -574,7 +589,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Flap%20boy.png?alt=media&token=0ca726ad-10c4-429c-a0a4-3cf5aea9b07b"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Flap%20boy.png?alt=media&token=0ca726ad-10c4-429c-a0a4-3cf5aea9b07b",
+                    90
                   )
                 }
               >
@@ -591,7 +607,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Flap%20girl.png?alt=media&token=b08d5077-ec09-412f-b6be-808ab4602769"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Flap%20girl.png?alt=media&token=b08d5077-ec09-412f-b6be-808ab4602769",
+                    70
                   )
                 }
               >
@@ -608,7 +625,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Fmimba%20boy.png?alt=media&token=bc5a66e3-9e62-4561-9b25-b19fe4bc76bc"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Fmimba%20boy.png?alt=media&token=bc5a66e3-9e62-4561-9b25-b19fe4bc76bc",
+                    84
                   )
                 }
               >
@@ -625,7 +643,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Fmimba%20girl.png?alt=media&token=84c14dc5-28c4-4351-aa9a-35e1fd9b1aa8"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Fmimba%20girl.png?alt=media&token=84c14dc5-28c4-4351-aa9a-35e1fd9b1aa8",
+                    84
                   )
                 }
               >
@@ -642,7 +661,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FNdem%20Boy.png?alt=media&token=672ca34b-2ec5-4b46-b183-45bb367d20ba"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FNdem%20Boy.png?alt=media&token=672ca34b-2ec5-4b46-b183-45bb367d20ba",
+                    108
                   )
                 }
               >
@@ -659,7 +679,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FNdem%20Go.png?alt=media&token=e77ef59f-aa19-425f-9ef2-6be8400a3f30"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FNdem%20Go.png?alt=media&token=e77ef59f-aa19-425f-9ef2-6be8400a3f30",
+                    79
                   )
                 }
               >
@@ -676,7 +697,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FNdoloBoy.png?alt=media&token=86702d1a-280b-4227-be26-541e923d5cdf"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FNdoloBoy.png?alt=media&token=86702d1a-280b-4227-be26-541e923d5cdf",
+                    70
                   )
                 }
               >
@@ -693,7 +715,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FNdoloGirl.png?alt=media&token=211a4a72-f353-4f65-84de-a72007830fae"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FNdoloGirl.png?alt=media&token=211a4a72-f353-4f65-84de-a72007830fae",
+                    80
                   )
                 }
               >
@@ -710,7 +733,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FRdv%20Boy.png?alt=media&token=5952efba-790a-410c-b368-727941945bff"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FRdv%20Boy.png?alt=media&token=5952efba-790a-410c-b368-727941945bff",
+                    85
                   )
                 }
               >
@@ -727,7 +751,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FRdv%20Girl.png?alt=media&token=f59dd8fa-6f2c-4e7d-a4bd-229edb4438df"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FRdv%20Girl.png?alt=media&token=f59dd8fa-6f2c-4e7d-a4bd-229edb4438df",
+                    93
                   )
                 }
               >
@@ -744,7 +769,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FSadGril002.png?alt=media&token=2d3898bc-5a76-439e-8005-5bddbcbed3bc"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FSadGril002.png?alt=media&token=2d3898bc-5a76-439e-8005-5bddbcbed3bc",
+                    93
                   )
                 }
               >
@@ -761,7 +787,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FSexy%20Boy.png?alt=media&token=4a17079a-444e-4d7c-b475-60a4a61a77ef"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FSexy%20Boy.png?alt=media&token=4a17079a-444e-4d7c-b475-60a4a61a77ef",
+                    88
                   )
                 }
               >
@@ -778,7 +805,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FSexy%20Girl.png?alt=media&token=6be05f7f-cc5b-41af-acaf-f07718853199"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FSexy%20Girl.png?alt=media&token=6be05f7f-cc5b-41af-acaf-f07718853199",
+                    103
                   )
                 }
               >
@@ -795,7 +823,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FSorryBoy.png?alt=media&token=cc9bdfa4-5e8c-4fde-bb44-3de8d471dd44"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2FSorryBoy.png?alt=media&token=cc9bdfa4-5e8c-4fde-bb44-3de8d471dd44",
+                    65
                   )
                 }
               >
@@ -812,7 +841,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Fvex%20girl.png?alt=media&token=543e5ec8-2810-48e6-92d8-f6f2ee1dae1f"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Fvex%20girl.png?alt=media&token=543e5ec8-2810-48e6-92d8-f6f2ee1dae1f",
+                    88
                   )
                 }
               >
@@ -829,7 +859,8 @@ class MessageScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.handleAddSticker(
-                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Fvex%20boy.png?alt=media&token=9e768b0c-5ce0-41da-a06f-fce01cea0625"
+                    "https://firebasestorage.googleapis.com/v0/b/yamo-17e83.appspot.com/o/Stickers%2Fvex%20boy.png?alt=media&token=9e768b0c-5ce0-41da-a06f-fce01cea0625",
+                    65
                   )
                 }
               >
@@ -886,7 +917,7 @@ class MessageScreen extends Component {
     );
   }
 
-  handleAddSticker = uri => {
+  handleAddSticker = (uri, width) => {
     console.log(uri);
     this.props.dispatch(
       sendMessage(
@@ -901,7 +932,8 @@ class MessageScreen extends Component {
         this.state.avatar != null || this.state.avatar != ""
           ? this.state.avatar
           : Globals.BaseDefaultAvatarMale,
-        firebaseUtils.messageTypes.sticker
+        firebaseUtils.messageTypes.sticker,
+        width
       )
     );
   };

@@ -6,13 +6,21 @@ export const messageTypes = {
   sticker: "sticker"
 };
 
-export function getMessageObject(sessionId, type, content, user, visitedDate) {
+export function getMessageObject(
+  sessionId,
+  type,
+  content,
+  user,
+  visitedDate,
+  stickerWidth
+) {
   const message = {
     id: sessionId,
     status: "sent",
     messageType: type,
     user: user,
-    createdAt: visitedDate
+    createdAt: visitedDate,
+    stickerWidth: stickerWidth
   };
 
   if (type === "text") {
